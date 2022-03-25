@@ -9,8 +9,8 @@ export default function useForm(initial = {}) {
     if (type === 'number') {
       value = parseInt(value);
     }
-    if (type === 'files') {
-      value[0] = e.target.files;
+    if (type === 'file') {
+      [value] = e.target.files;
     }
     setInputs({
       // Copy the existing state
