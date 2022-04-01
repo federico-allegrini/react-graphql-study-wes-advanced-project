@@ -2,63 +2,54 @@ import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
-import { CURRENT_USER_QUERY } from './User';
 import Error from './ErrorMessage';
 
-const SIGNUP_MUTATION = gql`
-  mutation SIGNUP_MUTATION(
-    $name: String!
+const RESET_MUTATION = gql`
+  mutation RESET_MUTATION(
     $email: String!
     $password: String!
+    $token: String!
   ) {
-    createUser(data: { name: $name, email: $email, password: $password }) {
-      id
-      email
-      name
+    redeemUserPasswordResetToken(
+      email: $email
+      password: $password
+      token: $token
+    ) {
+      code
+      message
     }
   }
 `;
 
-export default function SignUp() {
+export default function Reset({ token }) {
   const { inputs, handleChange, resetForm } = useForm({
-    name: '',
     email: '',
     password: '',
+    token,
   });
-  const [signup, { data, loading, error }] = useMutation(SIGNUP_MUTATION, {
+  const [reset, { data, loading, error }] = useMutation(RESET_MUTATION, {
     variables: inputs,
   });
+  const successfulError = data?.redeemUserPasswordResetToken?.code
+    ? data?.redeemUserPasswordResetToken
+    : undefined;
   async function handleSubmit(e) {
     e.preventDefault(); // Stop the form from submitting
     console.log(inputs);
     // Send the email and password to the graphqlAPI
-    const res = await signup().catch(console.error);
+    const res = await reset().catch(console.error);
     console.log(res);
     console.log(data, loading, error);
     resetForm();
   }
   return (
     <Form method="POST" onSubmit={handleSubmit}>
-      <h2>Sign Up for an Account</h2>
-      <Error error={error} />
+      <h2>Reset Your Password</h2>
+      <Error error={error || successfulError} />
       <fieldset>
-        {data?.createUser && (
-          <p>
-            Signed up with {data.createUser.email} - Please go ahead and Sign
-            In!
-          </p>
+        {data?.redeemUserPasswordResetToken === null && (
+          <p>Success! You can now Sign In!</p>
         )}
-        <label htmlFor="name">
-          Your Name
-          <input
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            autoComplete="name"
-            value={inputs.name}
-            onChange={handleChange}
-          />
-        </label>
         <label htmlFor="email">
           Email
           <input
@@ -81,7 +72,7 @@ export default function SignUp() {
             onChange={handleChange}
           />
         </label>
-        <button type="submit">Sign Up!</button>
+        <button type="submit">Reset!</button>
       </fieldset>
     </Form>
   );
