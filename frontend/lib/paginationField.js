@@ -10,7 +10,6 @@ export default function paginationField() {
     // First things we can do is return the items because they are already in the cache
     // The other thing we can do is to return false from here, (network request)
     read(existing = [], { args, cache }) {
-      console.log({ existing, args, cache });
       const { skip, first } = args;
 
       // Read the number of items on the page from the cache
@@ -42,9 +41,7 @@ export default function paginationField() {
       // There are items
       // Just reutrn them from the cache, and we don't need to go to the network
       if (items.length) {
-        console.log(
-          `There are ${items.length} items in the cache! Gonna send them to apollo`
-        );
+        // console.log(`There are ${items.length} items in the cache! Gonna send them to apollo`);
         return items;
       }
 
@@ -54,12 +51,12 @@ export default function paginationField() {
     merge(existing, incoming, { args }) {
       // This runs when the Apollo client comes back from the network with our product
       const { skip, first } = args;
-      console.log(`Merging items from the network ${incoming.length}`);
+      // console.log(`Merging items from the network ${incoming.length}`);
       const merged = existing ? existing.slice(0) : [];
       for (let i = skip; i < skip + incoming.length; ++i) {
         merged[i] = incoming[i - skip];
       }
-      console.log(merged);
+      // console.log(merged);
 
       // Finally we return the merged items from the cache
       return merged;

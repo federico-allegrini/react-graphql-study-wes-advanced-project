@@ -35,10 +35,8 @@ export default function SignIn() {
   });
   async function handleSubmit(e) {
     e.preventDefault(); // Stop the form from submitting
-    console.log(inputs);
     // Send the email and password to the graphqlAPI
     const res = await signin();
-    console.log(res);
     resetForm();
   }
   const error =

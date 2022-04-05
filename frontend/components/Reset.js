@@ -35,11 +35,8 @@ export default function Reset({ token }) {
     : undefined;
   async function handleSubmit(e) {
     e.preventDefault(); // Stop the form from submitting
-    console.log(inputs);
     // Send the email and password to the graphqlAPI
     const res = await reset().catch(console.error);
-    console.log(res);
-    console.log(data, loading, error);
     resetForm();
   }
   return (

@@ -11,7 +11,7 @@ const DELETE_PRODUCT_MUTATION = gql`
 `;
 
 function update(cache, payload) {
-  console.log('Running the upfdate function after delete', payload);
+  // console.log('Running the update function after delete', payload);
   cache.evict(cache.identify(payload.data.deleteProduct));
 }
 
