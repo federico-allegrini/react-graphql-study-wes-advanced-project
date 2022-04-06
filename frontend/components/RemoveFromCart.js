@@ -20,9 +20,20 @@ const REMOVE_FROM_CART = gql`
   }
 `;
 
+function update(cache, payload) {
+  cache.evict(cache.identify(payload.data.deleteCartItem));
+}
+
 export default function RemoveFromCart({ id }) {
   const [deleteCartItem, { loading }] = useMutation(REMOVE_FROM_CART, {
     variables: { id },
+    update,
+    // optimisticResponse: {
+    //   deleteCartItem: {
+    //     __typename: 'CartItem',
+    //     id,
+    //   },
+    // },
   });
   return (
     <BigButton
