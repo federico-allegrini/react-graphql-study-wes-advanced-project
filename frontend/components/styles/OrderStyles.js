@@ -9,7 +9,7 @@ const OrderStyles = styled.div`
   border-top: 10px solid red;
   & > p {
     display: grid;
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: 2fr 5fr;
     margin: 0;
     border-bottom: 1px solid var(--offWhite);
     span {
