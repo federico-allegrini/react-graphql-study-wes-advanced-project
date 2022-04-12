@@ -2,6 +2,7 @@ import { relationship, text } from '@keystone-next/fields';
 import { list } from '@keystone-next/keystone/schema';
 import { cloudinaryImage } from '@keystone-next/cloudinary';
 import 'dotenv/config';
+import { isSignedIn, permissions } from '../access';
 
 console.log(process.env.CLOUDINARY_CLOUD_NAME, process.env.CLOUDINARY_API_KEY);
 
@@ -13,6 +14,12 @@ export const cloudinary = {
 };
 
 export const ProductImage = list({
+  access: {
+    create: isSignedIn,
+    read: () => true,
+    update: permissions.canManageProducts,
+    delete: permissions.canManageProducts,
+  },
   fields: {
     image: cloudinaryImage({ cloudinary, label: 'Source' }),
     altText: text(),
