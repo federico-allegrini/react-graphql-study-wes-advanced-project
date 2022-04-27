@@ -6,7 +6,7 @@ exports[`<Product/> Renders and matches the snapshot 1`] = `
     class="ItemStyles-sc-16pk14u-0 fAcGEr"
   >
     <img
-      alt=""
+      alt="dogs are best"
       src="dog.jpg"
     />
     <h3

@@ -19,6 +19,7 @@ describe('<Product/>', () => {
     expect(link).toHaveAttribute('href', '/product/abc123');
     expect(link).toHaveTextContent(product.name);
   });
+
   it('Renders and matches the snapshot', () => {
     const { container, debug } = render(
       <MockedProvider>
@@ -26,5 +27,16 @@ describe('<Product/>', () => {
       </MockedProvider>
     );
     expect(container).toMatchSnapshot();
+  });
+
+  it('Renders the image properly', () => {
+    const { container, debug } = render(
+      <MockedProvider>
+        <Product product={product} />
+      </MockedProvider>
+    );
+    // Grab the image
+    const img = screen.getByAltText(product.name);
+    expect(img).toBeInTheDocument();
   });
 });
