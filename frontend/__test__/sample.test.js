@@ -23,4 +23,20 @@ describe('Same test 101', () => {
   it('Can add strings of numbers together', () => {
     expect(add('1', '2')).toBe(3);
   });
+
+  // Execute only this test
+  fit('Execute only on this test', () => {
+    expect(1).toEqual(1);
+  });
+  it.only('Execute only on this test', () => {
+    expect(1).toEqual(1);
+  });
+
+  // Skip this test
+  xit('Skip this test', () => {
+    expect(1).toEqual(1);
+  });
+  it.skip('Skip this test', () => {
+    expect(1).toEqual(1);
+  });
 });
