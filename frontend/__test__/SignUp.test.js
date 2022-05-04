@@ -64,7 +64,13 @@ describe('<Signup/>', () => {
     // Click the submit
     await userEvent.click(screen.getByText('Sign Up!'));
     await screen.findByText(
-      `Signed up with ${me.email} - Please go ahead and SignIn!`
+      `Signed up with ${me.email} - Please go ahead and Sign In!`
     );
   });
 });
+
+//*
+// Problem for node module userEvent => "/node_modules/@testing-library/user-event"
+// Search "require("@testing-library/dom");"
+// Replace with "require("@testing-library/react/node_modules/@testing-library/dom");"
+//*
